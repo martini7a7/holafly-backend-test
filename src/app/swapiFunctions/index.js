@@ -19,7 +19,17 @@ const genericRequest = async (url, method, body, logging = false) => {
     return data;
 }
 
+const getRandomPeopleId = () => {
+    return Math.floor(Math.random() * (83 - 1 + 1) + 1);
+}
+
+const getRandomPlanetId = () => {
+    return Math.floor(Math.random() * (60 - 1 + 1) + 1);
+}
+
 module.exports = {
     getWeightOnPlanet,
-    genericRequest
+    genericRequest,
+    getRandomPeopleId,
+    getRandomPlanetId
 }

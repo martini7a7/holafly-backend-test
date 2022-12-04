@@ -12,7 +12,7 @@ const applySwapiEndpoints = (server, app) => {
     server.get('/hfswapi/getPeople/:id', async (req, res) => {
         try {
             const { id } = req.params;
-            const data = await controller.getPeopleById(id)
+            const data = await controller.getPeopleById(id);
             res.status(200).send(data);
         } catch (error) {
             res.status(500).send({error: error.message});
@@ -22,7 +22,7 @@ const applySwapiEndpoints = (server, app) => {
     server.get('/hfswapi/getPlanet/:id', async (req, res) => {
         try {
             const { id } = req.params;
-            const data = await controller.getPlanetById(id)
+            const data = await controller.getPlanetById(id);
             res.status(200).send(data);
         } catch (error) {
             res.status(500).send({error: error.message});
@@ -30,7 +30,13 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/getWeightOnPlanetRandom', async (req, res) => {
-        res.sendStatus(501);
+        try {
+            const { id } = req.params;
+            const data = await controller.getWeightOnPlanetRandom();
+            res.status(200).send(data);
+        } catch (error) {
+            res.status(500).send({error: error.message});
+        }
     });
 
     server.get('/hfswapi/getLogs',async (req, res) => {

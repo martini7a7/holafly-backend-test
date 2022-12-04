@@ -53,10 +53,7 @@ class Controller {
         let data = await this.app.db.swPlanet.findOne(
             { 
                 where: { id }, 
-                attributes: [
-                    'name', 
-                    'gravity'
-                ] 
+                attributes: ['name', 'gravity']
             });
 
         if (data == null) {
@@ -74,6 +71,28 @@ class Controller {
                 };
         }
 
+        return data;
+    }
+
+    async getWeightOnPlanetRandom() {
+        let data = {};
+        const swRandomPersonInfo = await this.getPeopleById(this.app.swapiFunctions.getRandomPeopleId());
+        const swRandomPlanetInfo = await this.getPlanetById(this.app.swapiFunctions.getRandomPlanetId());
+        if (swRandomPersonInfo.homeworld_name == swRandomPlanetInfo.name) {
+            data = { error: 'Se intentó calcular el peso del personaje en su planeta natal'};
+        } else if (swRandomPersonInfo.mass == 'unknown') {
+            data = { error: `La masa del personaje ${swRandomPersonInfo.name} es desconocida`};
+            
+        } else if (swRandomPlanetInfo.gravity == 'unknown') {
+            data = { error: `La gravedad del planeta ${swRandomPlanetInfo.name} es desconocida`};
+        } else {
+            const personMass = parseFloat(swRandomPersonInfo.mass.match(/[+-]?\d+(\.\d+)?/g)[0]);
+            const planetGravity = parseFloat(swRandomPlanetInfo.gravity.match(/[+-]?\d+(\.\d+)?/g)[0]);
+
+            const weightOnPlanet = this.app.swapiFunctions.getWeightOnPlanet(personMass, planetGravity);
+
+            data = { message: `El peso del personaje ${swRandomPersonInfo.name} en el planeta ${swRandomPlanetInfo.name} es: ${weightOnPlanet}`}
+        }
         return data;
     }
 }
