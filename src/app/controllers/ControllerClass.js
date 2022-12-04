@@ -48,6 +48,34 @@ class Controller {
         
         return data;
     }
+
+    async getPlanetById(id) {
+        let data = await this.app.db.swPlanet.findOne(
+            { 
+                where: { id }, 
+                attributes: [
+                    'name', 
+                    'gravity'
+                ] 
+            });
+
+        if (data == null) {
+            const getPlanetSwapiResponse = await this.app.swapiFunctions.genericRequest(
+                `${process.env.SWAPI_BASE_URL}/planets/${id}`,
+                'GET',
+                null,
+                false
+            );
+            data = getPlanetSwapiResponse.detail ? 
+                getPlanetSwapiResponse :
+                {
+                    name: getPlanetSwapiResponse.name,
+                    gravity: getPlanetSwapiResponse.gravity,
+                };
+        }
+
+        return data;
+    }
 }
 
 module.exports = {
