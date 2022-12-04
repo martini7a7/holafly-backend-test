@@ -95,6 +95,10 @@ class Controller {
         }
         return data;
     }
+
+    async getAllLogs() {
+        return await this.app.db.logging.findAll({ attributes: ['action', 'header', 'ip'] });
+    }
 }
 
 module.exports = {
