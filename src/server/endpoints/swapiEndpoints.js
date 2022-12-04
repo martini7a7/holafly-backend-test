@@ -20,7 +20,13 @@ const applySwapiEndpoints = (server, app) => {
     });
 
     server.get('/hfswapi/getPlanet/:id', async (req, res) => {
-        res.sendStatus(501);
+        try {
+            const { id } = req.params;
+            const data = await controller.getPlanetById(id)
+            res.status(200).send(data);
+        } catch (error) {
+            res.status(500).send({error: error.message});
+        }
     });
 
     server.get('/hfswapi/getWeightOnPlanetRandom', async (req, res) => {
