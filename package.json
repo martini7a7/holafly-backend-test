@@ -1,4 +1,13 @@
 {
+  "name": "holafly-backend-test",
+  "version": "1.0.0",
+  "description": "Prueba Tecnica de Holafly",
+  "main": "index.js",
+  "scripts": {
+  "start": "node index.js",
+  "dev": "nodemon --watch ./src index.js",
+  "dev-nd": "nodemon ./src/index.js"
+  },
   "dependencies": {
     "body-parser": "^1.20.0",
     "dotenv": "^16.0.1",
@@ -8,13 +17,5 @@
     "sequelize": "^6.21.2",
     "sequelize-cli": "^6.4.1",
     "sqlite3": "^5.0.8"
-  },
-  "name": "PruebaTecnicaHolafly",
-  "version": "1.0.0",
-  "description": "Prueba Técnica de Holafly",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon --watch ./src index.js"
   }
 }
